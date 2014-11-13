@@ -218,11 +218,10 @@ the last message from NICK.  If so, remove them from
 
 (defun circe-notifications-get-nicks-on-all-networks ()
   "Get a list of all nicks in use according to `circe-network-options'."
-  (let ((x 0))
-    (while (< x (list-length circe-network-options))
+  (dolist (buf (circe-server-buffers))
+    (with-current-buffer buf
       (add-to-list 'circe-notifications-nicks-on-all-networks
-                   (nth 2 (nth x circe-network-options)))
-      (setq x (+ 1 x)))))
+                   circe-server-nick))))
 
 
 (defun circe-notifications-has-x-tools-p ()
